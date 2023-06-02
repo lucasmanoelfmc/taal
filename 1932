@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+ 
+using namespace std;
+
+typedef long long ll;
+
+int n, c;
+ll tabela[200001][2];
+vector<int> cotacoes;
+
+ll dp(int dia, int comprou){
+    ll resultado;
+    
+    if(dia >= n){
+        return 0;
+    }
+    
+    if(tabela[dia][comprou] != -1){
+        return tabela[dia][comprou];
+    }
+    
+    if(comprou){
+        resultado = max(dp(dia+1,1),dp(dia+1,0)+cotacoes[dia]);
+    }
+    else{
+        resultado = max(dp(dia+1,0),dp(dia+1,1)-(cotacoes[dia]+c));
+    }
+    
+    return tabela[dia][comprou] = resultado;
+}
+ 
+int main() {
+    
+    int v;
+    scanf("%d %d",&n,&c);
+    
+    for(int i=0; i<= n; i++){
+        tabela[i][0] = -1;
+        tabela[i][1] = -1;
+    }
+    
+    for(int i=0; i<n; i++){
+        scanf("%d",&v);
+        cotacoes.push_back(v);
+    }
+    
+    printf("%lld\n",dp(0,0));
+ 
+    return 0;
+}
