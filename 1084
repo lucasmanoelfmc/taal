@@ -1,0 +1,41 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+ 
+int main(){
+    int n,d;
+ 
+    while(cin >> n >> d, n && d){
+ 
+        char in[n+1];
+        char out[n+1];
+         
+        cin.get();
+        scanf("%s",in);
+ 
+        int top = -1;
+        int posicao = 0;
+ 
+        while(d > 0){
+            if(top == -1)
+                out[++top] = in[posicao++];        
+ 
+            if(out[top] < in[posicao]){
+                top--;
+                d--;
+                continue;
+            }
+ 
+            out[++top] = in[posicao++];
+ 
+            if(posicao == n)
+                while(d--)
+                    top--;
+        }
+ 
+        for(unsigned i = posicao; i < n; ++i) 
+            out[++top] = in[i];
+        out[top+1] = '\0';
+        printf("%s\n",out);
+    }
+}
